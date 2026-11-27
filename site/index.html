@@ -149,6 +149,9 @@
   .manifesto p { font-size: 20px; line-height: 1.6; margin: 0 0 20px; text-wrap: pretty; }
   .manifesto p.dim { color: var(--muted); }
   .nots { display: flex; flex-wrap: wrap; gap: 8px; margin: 36px 0 0; padding: 0; list-style: none; }
+  .name { padding: 0 0 140px; }
+  .manifesto p a { text-decoration-color: color-mix(in srgb, currentColor 35%, transparent); text-underline-offset: 3px; }
+  .manifesto p a:hover { text-decoration-color: currentColor; }
   .nots li {
     font-size: 14px; color: var(--muted);
     border: 1px solid var(--line); border-radius: 999px; padding: 4px 12px;
@@ -317,6 +320,15 @@
   </div>
 </section>
 
+<section class="manifesto name" id="name">
+  <div class="wrap">
+    <div class="label">The name</div>
+    <h2>Every Pierre needs <em style="font-style:italic">a Marie.</em></h2>
+    <p>Marie is built on <a href="https://diffs.com">Pierre</a>'s open-source libraries. <a href="https://diffs.com/docs">Diffs</a> renders the code and the diffs, <a href="https://trees.software">Trees</a> draws the file tree, and <a href="https://diffs.com/words">Words</a> renders the Markdown.</p>
+    <p class="dim">So it's named after Marie Curie, who did her best work alongside Pierre.</p>
+  </div>
+</section>
+
 <section class="end">
   <div class="wrap">
     <svg class="mark" aria-hidden="true"><use href="#logo"/></svg>
@@ -330,7 +342,7 @@
 
 <div class="wrap">
   <footer>
-    <span>Marie. Built with <a href="https://tauri.app">Tauri</a> and <a href="https://diffs.com">Pierre</a>.</span>
+    <span>Marie. Built on <a href="https://diffs.com">Pierre</a>, with <a href="https://tauri.app">Tauri</a>.</span>
     <span class="links">
       <a href="https://github.com/siddharthborderwala/marie">Source</a>
       <a href="https://github.com/siddharthborderwala/marie/releases">Releases</a>
