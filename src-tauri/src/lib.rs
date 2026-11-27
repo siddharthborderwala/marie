@@ -1,3 +1,4 @@
+mod cli;
 mod git;
 mod menu;
 mod pty;
@@ -362,6 +363,17 @@ fn focus_window_for(app: tauri::AppHandle, window: tauri::Window, uri: String) -
     windows::focus_existing(&app, &uri, window.label())
 }
 
+#[derive(Serialize)]
+struct CliInstall {
+    path: String,
+    on_path: bool,
+}
+
+#[tauri::command]
+async fn install_cli() -> Res<CliInstall> {
+    blocking(|| cli::install(true).map(|(path, on_path)| CliInstall { path, on_path })).await
+}
+
 /// Folders from the previous session (main window, launched without arguments).
 #[tauri::command]
 fn take_session() -> Vec<String> {
@@ -382,6 +394,12 @@ static QUITTING: std::sync::atomic::AtomicBool = std::sync::atomic::AtomicBool::
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        // Must be first: a second launch hands its args to this instance and exits.
+        .plugin(tauri_plugin_single_instance::init(|app, argv, cwd| cli::handle_second_launch(app, argv, cwd)))
+        .setup(|_app| {
+            cli::ensure_installed();
+            Ok(())
+        })
         .plugin(tauri_plugin_dialog::init())
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_clipboard_manager::init())
@@ -419,6 +437,7 @@ pub fn run() {
             set_window_folder,
             focus_window_for,
             take_session,
+            install_cli,
         ])
         .on_window_event(|window, event| {
             if let tauri::WindowEvent::Destroyed = event {

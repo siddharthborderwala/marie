@@ -3,6 +3,7 @@ import { editorUndo, saveAll, saveTab } from "@/lib/editing"
 import { newWindow } from "@/lib/win"
 import { checkForUpdates } from "@/lib/updater"
 import { toast } from "sonner"
+import { invoke } from "@tauri-apps/api/core"
 import { activeTab, trimTrailingBlankLines, useStore } from "@/store"
 import { ipc } from "@/lib/ipc"
 import { looksLikeDiff } from "@/lib/views"
@@ -28,6 +29,24 @@ export async function openFolderDialog() {
 export const commands: Command[] = [
   { id: "file.newUntitled", group: "File", title: "New Untitled", shortcut: "⌘N", run: () => S().newScratch() },
   { id: "file.openFolder", group: "File", title: "Open Folder…", shortcut: "⌘O", run: openFolderDialog },
+  {
+    id: "app.installCli",
+    group: "Shell Command",
+    title: "Install 'marie' Command in PATH",
+    run: async () => {
+      try {
+        const r = await invoke<{ path: string; on_path: boolean }>("install_cli")
+        if (r.on_path) toast.success("Installed 'marie'", { description: `${r.path} — try \`marie .\`` })
+        else
+          toast.warning("Installed 'marie', but ~/.local/bin isn't on your PATH", {
+            description: 'Add  export PATH="$HOME/.local/bin:$PATH"  to your ~/.zshrc',
+            duration: 10000,
+          })
+      } catch (e) {
+        toast.error(String(e))
+      }
+    },
+  },
   { id: "app.checkUpdates", group: "Marie", title: "Check for Updates…", run: () => void checkForUpdates(false) },
   { id: "file.newWindow", group: "File", title: "New Window", shortcut: "⇧⌘N", run: () => void newWindow() },
   {

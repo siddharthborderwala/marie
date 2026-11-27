@@ -39,6 +39,10 @@ pub fn take_session() -> Vec<String> {
 }
 
 pub fn create<R: Runtime>(app: &AppHandle<R>, folder: Option<&str>) -> tauri::Result<String> {
+    create_with(app, folder, None)
+}
+
+pub fn create_with<R: Runtime>(app: &AppHandle<R>, folder: Option<&str>, file: Option<&str>) -> tauri::Result<String> {
     let state = app.state::<Windows>();
     let label = {
         let mut n = state.next.lock().unwrap();
@@ -49,6 +53,10 @@ pub fn create<R: Runtime>(app: &AppHandle<R>, folder: Option<&str>) -> tauri::Re
     if let Some(f) = folder {
         url.push_str("?folder=");
         url.push_str(&urlencoding(f));
+        if let Some(file) = file {
+            url.push_str("&file=");
+            url.push_str(&urlencoding(file));
+        }
     }
     // Cascade from the focused window like macOS document apps.
     let (x, y) = app

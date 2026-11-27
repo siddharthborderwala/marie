@@ -50,8 +50,10 @@ async function boot() {
 
   const folderParam = new URLSearchParams(location.search).get("folder")
   if (folderParam) {
-    // Window opened via New Window / Open in New Window.
+    // Window opened via New Window / Open in New Window / `marie <folder> [file]`.
     await s.openWorkspace(folderParam)
+    const fileParam = new URLSearchParams(location.search).get("file")
+    if (fileParam) useStore.getState().openFile(fileParam)
   } else if (windowLabel() === "main" && pos.length === 0 && isTauri()) {
     // Plain launch: restore the previous session's windows.
     const session = await invoke<string[]>("take_session").catch(() => [] as string[])
@@ -153,8 +155,11 @@ export function App() {
     if (!isTauri()) return
     // Menu events are sent to the focused window only.
     const un = getCurrentWebviewWindow().listen<string>("menu", (e) => runCommand(e.payload))
+    // `marie <folder> <file>` when that folder is already open here.
+    const unFile = getCurrentWebviewWindow().listen<string>("open-file", (e) => useStore.getState().openFile(e.payload))
     return () => {
       void un.then((f) => f())
+      void unFile.then((f) => f())
     }
   }, [])
 
