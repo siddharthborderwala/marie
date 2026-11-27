@@ -11,7 +11,7 @@ export type Tab =
   | { id: string; kind: "scratch"; title: string; lang: string | null }
   | { id: string; kind: "patch"; title: string; patch: string }
 
-export type PaletteMode = "files" | "commands" | "line" | "ssh" | "theme-dark" | "theme-light" | "branch" | "lang"
+export type PaletteMode = "files" | "commands" | "line" | "ssh" | "theme" | "branch" | "lang"
 
 interface Prefs {
   darkTheme: string

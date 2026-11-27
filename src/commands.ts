@@ -282,8 +282,7 @@ export const commands: Command[] = [
       else S().updateTab(t.id, { preview: !t.preview })
     },
   },
-  { id: "view.selectTheme", group: "Theme", title: "Select Dark Theme…", shortcut: "⌘K", run: () => S().openPalette("theme-dark") },
-  { id: "view.selectLightTheme", group: "Theme", title: "Select Light Theme…", run: () => S().openPalette("theme-light") },
+  { id: "view.selectTheme", group: "Theme", title: "Select Color Theme…", shortcut: "⌘K", run: () => S().openPalette("theme") },
   {
     id: "view.importTheme",
     group: "Theme",
@@ -398,12 +397,6 @@ async function saveActive(as: boolean) {
 export function runCommand(id: string) {
   const c = commands.find((c) => c.id === id)
   if (!c) return
-  // The "theme" menu item opens the picker matching the current appearance.
-  if (id === "view.selectTheme") {
-    const s = S()
-    const dark = s.appearance === "system" ? s.systemDark : s.appearance === "dark"
-    return s.openPalette(dark ? "theme-dark" : "theme-light")
-  }
   if (c.when && !c.when()) return
   void c.run()
 }

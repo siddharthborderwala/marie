@@ -22,8 +22,7 @@ const PLACEHOLDER: Record<PaletteMode, string> = {
   commands: "Type a command…",
   line: "Go to line…",
   ssh: "host, host:/path or ssh://host/path",
-  "theme-dark": "Select dark theme",
-  "theme-light": "Select light theme",
+  theme: "Select color theme (↑↓ to preview)",
   branch: "Compare working tree with branch…",
   lang: "Select language mode",
 }
@@ -50,12 +49,13 @@ export function Palette() {
     setQuery("")
     // Theme pickers start on the current theme; other modes start on the first item.
     const s = useStore.getState()
-    setHighlight(mode === "theme-dark" ? s.darkTheme : mode === "theme-light" ? s.lightTheme : "")
+    const dark = s.appearance === "system" ? s.systemDark : s.appearance === "dark"
+    setHighlight(mode === "theme" ? (dark ? s.darkTheme : s.lightTheme) : "")
   }, [open, mode])
 
   const themeSnapshot = useRef<{ darkTheme: string; lightTheme: string; appearance: "system" | "light" | "dark" } | null>(null)
   useEffect(() => {
-    if (open && (mode === "theme-dark" || mode === "theme-light")) {
+    if (open && mode === "theme") {
       const s = useStore.getState()
       themeSnapshot.current = { darkTheme: s.darkTheme, lightTheme: s.lightTheme, appearance: s.appearance }
     }
@@ -64,7 +64,7 @@ export function Palette() {
   const onOpenChange = (o: boolean) => {
     if (!o) {
       // Escape from theme picker reverts the live preview.
-      if (themeSnapshot.current && (mode === "theme-dark" || mode === "theme-light")) {
+      if (themeSnapshot.current && mode === "theme") {
         useStore.getState().setPrefs(themeSnapshot.current)
       }
       themeSnapshot.current = null
@@ -76,7 +76,7 @@ export function Palette() {
     close()
   }
 
-  const isTheme = effMode === "theme-dark" || effMode === "theme-light"
+  const isTheme = effMode === "theme"
 
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange} className="max-w-xl sm:max-w-xl">
@@ -88,8 +88,7 @@ export function Palette() {
         onValueChange={(v) => {
           setHighlight(v)
           // Live preview while moving through the theme list.
-          if (isTheme && v && themeOptions(effMode === "theme-dark", useStore.getState().customThemes).some(([id]) => id === v))
-            useStore.getState().setPrefs(effMode === "theme-dark" ? { darkTheme: v } : { lightTheme: v })
+          if (isTheme && v) applyTheme(v)
         }}
       >
         <CommandInput placeholder={PLACEHOLDER[effMode]} value={query} onValueChange={setQuery} />
@@ -98,7 +97,16 @@ export function Palette() {
           {effMode === "commands" && <CommandResults onDone={done} />}
           {effMode === "line" && <LineResult query={q} onDone={done} />}
           {effMode === "ssh" && <SshResults query={q} onDone={done} />}
-          {isTheme && <ThemeResults dark={effMode === "theme-dark"} onDone={done} />}
+          {isTheme && (
+            <ThemeResults
+              onChoose={(t) => {
+                // Undo preview side effects (other slot), then apply only the chosen theme.
+                if (themeSnapshot.current) useStore.getState().setPrefs(themeSnapshot.current)
+                applyTheme(t)
+                done()
+              }}
+            />
+          )}
           {effMode === "branch" && <BranchResults onDone={done} />}
           {effMode === "lang" && <LangResults onDone={done} />}
         </CommandList>
@@ -271,21 +279,24 @@ function SshResults({ query, onDone }: { query: string; onDone: () => void }) {
   )
 }
 
-function ThemeResults({ dark, onDone }: { dark: boolean; onDone: () => void }) {
+/** Set a theme in its own slot (dark/light); setPrefs then switches the mode to match. */
+function applyTheme(id: string) {
+  const custom = useStore.getState().customThemes
+  if (themeOptions(true, custom).some(([t]) => t === id)) useStore.getState().setPrefs({ darkTheme: id })
+  else if (themeOptions(false, custom).some(([t]) => t === id)) useStore.getState().setPrefs({ lightTheme: id })
+}
+
+function ThemeResults({ onChoose }: { onChoose: (id: string) => void }) {
   const custom = useStore((s) => s.customThemes)
-  const list = themeOptions(dark, custom)
-  const current = useStore((s) => (dark ? s.darkTheme : s.lightTheme))
-  return (
-    <CommandGroup heading={dark ? "Dark themes" : "Light themes"}>
-      {list.map(([t, label]) => (
+  const current = useStore((s) => ((s.appearance === "system" ? s.systemDark : s.appearance === "dark") ? s.darkTheme : s.lightTheme))
+  const group = (dark: boolean) => (
+    <CommandGroup heading={dark ? "Dark" : "Light"}>
+      {themeOptions(dark, custom).map(([t, label]) => (
         <CommandItem
           key={t}
           value={t}
-          keywords={[label]}
-          onSelect={() => {
-            useStore.getState().setPrefs(dark ? { darkTheme: t } : { lightTheme: t })
-            onDone()
-          }}
+          keywords={[label, dark ? "dark" : "light"]}
+          onSelect={() => onChoose(t)}
           data-checked={t === current}
         >
           <IconPalette className="opacity-60" /> {label}
@@ -293,6 +304,12 @@ function ThemeResults({ dark, onDone }: { dark: boolean; onDone: () => void }) {
         </CommandItem>
       ))}
     </CommandGroup>
+  )
+  return (
+    <>
+      {group(true)}
+      {group(false)}
+    </>
   )
 }
 
