@@ -123,6 +123,8 @@ jobs:
           b=src-tauri/target/universal-apple-darwin/release/bundle
           mkdir -p dist/release
           cp "$b"/dmg/*.dmg "dist/release/Marie_${v}_universal.dmg"
+          # Unversioned copy so the website can link to releases/latest/download/Marie.dmg
+          cp "$b"/dmg/*.dmg dist/release/Marie.dmg
           cp "$b/macos/Marie.app.tar.gz" "dist/release/Marie_${v}_universal.app.tar.gz"
           cp "$b/macos/Marie.app.tar.gz.sig" "dist/release/Marie_${v}_universal.app.tar.gz.sig"
           # Updater manifest: the universal bundle serves both architectures.
