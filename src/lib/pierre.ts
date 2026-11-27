@@ -13,7 +13,8 @@ export const EDITOR_CSS = `
    (Pierre's theme copy can differ slightly from the chrome palette). */
 :host { --diffs-dark-bg: var(--background); --diffs-light-bg: var(--background); --diffs-bg: var(--background); }
 /* Code starts right after the divider (Pierre reserves 2ch for +/- markers; we use bars). */
-[data-line] { padding-inline-start: 0.75ch; }
+/* Must be exactly 1ch: Pierre's editor positions carets/selections at gutter + 1ch. */
+[data-line] { padding-inline-start: 1ch; }
 /* Indent guides: one 1px line per indent level, painted from data-indent (see indentGuides.ts) */
 [data-line][data-indent] {
   background-image: repeating-linear-gradient(
@@ -23,7 +24,7 @@ export const EDITOR_CSS = `
   );
   background-size: calc(var(--indent) * 1ch) 100%;
   background-repeat: no-repeat;
-  background-position: 0.75ch 0;
+  background-position: 1ch 0;
 }
 /* Code weight follows Settings → Code → Weight */
 :host, pre, code, [data-code] { font-weight: var(--code-font-weight, 400); }
