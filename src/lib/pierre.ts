@@ -11,7 +11,7 @@ export const EDITOR_CSS = `
 }
 /* Code background = window background, so code and the area around it always match
    (Pierre's theme copy can differ slightly from the chrome palette). */
-:host { --diffs-dark-bg: var(--background); --diffs-light-bg: var(--background); }
+:host { --diffs-dark-bg: var(--background); --diffs-light-bg: var(--background); --diffs-bg: var(--background); }
 /* Code starts right after the divider (Pierre reserves 2ch for +/- markers; we use bars). */
 [data-line] { padding-inline-start: 0.75ch; }
 /* Indent guides: one 1px line per indent level, painted from data-indent (see indentGuides.ts) */
