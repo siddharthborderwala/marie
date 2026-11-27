@@ -169,6 +169,19 @@
   .f p { margin: 0; color: var(--muted); font-size: 15px; line-height: 1.6; }
   .f .keys { margin-top: 18px; display: flex; gap: 6px; flex-wrap: wrap; font-size: 13px; }
 
+  /* keybindings */
+  .keys-sec { padding: 0 0 140px; }
+  .keys-sec .head, .reading .head { max-width: 760px; margin: 0 auto 56px; text-align: center; }
+  .keys-sec .head p { color: var(--muted); font-size: 18px; margin: 0; text-wrap: pretty; }
+  .kb { display: grid; grid-template-columns: repeat(3, 1fr); column-gap: 40px; margin: 0; }
+  .kb div { display: flex; justify-content: space-between; align-items: center; gap: 16px; padding: 12px 0; border-bottom: 1px solid var(--line); }
+  .kb dt { font-size: 15px; }
+  .kb dd { margin: 0; display: flex; gap: 4px; white-space: nowrap; font-size: 13px; }
+  .kb kbd { padding: 1px 8px; letter-spacing: .12em; }
+  .kb .sep { color: var(--muted); padding: 0 2px; }
+  @media (max-width: 860px) { .kb { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 600px) { .kb { grid-template-columns: 1fr; } .keys-sec { padding-bottom: 96px; } }
+
   /* second shot */
   .reading { padding: 0 0 140px; }
   .reading .head { max-width: 760px; margin: 0 auto 56px; text-align: center; }
@@ -301,6 +314,36 @@
         <div class="keys"><kbd>⌘J</kbd></div>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="keys-sec" id="keys">
+  <div class="wrap">
+    <div class="head">
+      <div class="label">Familiar by default</div>
+      <h2>If you know VS Code, <em style="font-style:italic">you know Marie.</em></h2>
+      <p>Same shortcuts, same habits. Tabs, a file tree you can create, rename and delete in, find in files, go to line, multiple windows, right-click menus everywhere, and your folders reopen where you left them.</p>
+    </div>
+    <dl class="kb">
+      <div><dt>Go to file</dt><dd><kbd>⌘P</kbd></dd></div>
+      <div><dt>Command palette</dt><dd><kbd>⇧⌘P</kbd></dd></div>
+      <div><dt>Find in files</dt><dd><kbd>⇧⌘F</kbd></dd></div>
+      <div><dt>Go to line</dt><dd><kbd>⌃G</kbd></dd></div>
+      <div><dt>Toggle sidebar</dt><dd><kbd>⌘B</kbd></dd></div>
+      <div><dt>Explorer</dt><dd><kbd>⇧⌘E</kbd></dd></div>
+      <div><dt>Terminal</dt><dd><kbd>⌘J</kbd></dd></div>
+      <div><dt>New terminal</dt><dd><kbd>⌃⇧`</kbd></dd></div>
+      <div><dt>Save</dt><dd><kbd>⌘S</kbd></dd></div>
+      <div><dt>Close tab</dt><dd><kbd>⌘W</kbd></dd></div>
+      <div><dt>Reopen closed tab</dt><dd><kbd>⇧⌘T</kbd></dd></div>
+      <div><dt>Next / previous tab</dt><dd><kbd>⇧⌘]</kbd><span class="sep">/</span><kbd>⇧⌘[</kbd></dd></div>
+      <div><dt>Back / forward</dt><dd><kbd>⌃-</kbd><span class="sep">/</span><kbd>⌃⇧-</kbd></dd></div>
+      <div><dt>Markdown preview</dt><dd><kbd>⇧⌘V</kbd></dd></div>
+      <div><dt>Toggle word wrap</dt><dd><kbd>⌥Z</kbd></dd></div>
+      <div><dt>Zoom in / out</dt><dd><kbd>⌘=</kbd><span class="sep">/</span><kbd>⌘-</kbd></dd></div>
+      <div><dt>New window</dt><dd><kbd>⇧⌘N</kbd></dd></div>
+      <div><dt>Settings</dt><dd><kbd>⌘,</kbd></dd></div>
+    </dl>
   </div>
 </section>
 
