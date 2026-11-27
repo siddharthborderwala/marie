@@ -20,9 +20,12 @@ const TREE_CSS = `
 /* Pill-shaped search field, matching the shadcn inputs */
 [data-file-tree-search-input] {
   border-radius: 9999px;
-  padding-inline: 10px;
+  padding-inline: 12px;
 }
-/* Breathing room after the last item: 10% of the window height, at least 100px.
+[data-file-tree-search-container] {
+  padding: 2px 12px 8px;
+}
+/* Breathing room after the last item.
    A real spacer element (padding on the fixed-height list is ignored by WebKit). */
 [data-file-tree-virtualized-scroll]::after {
   content: "";
