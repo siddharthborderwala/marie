@@ -28,6 +28,7 @@ import { applyChrome, loadCustomThemes } from "@/lib/themes"
 import { toast } from "sonner"
 import { invoke } from "@tauri-apps/api/core"
 import { newWindow, windowLabel } from "@/lib/win"
+import { checkForUpdates } from "@/lib/updater"
 import { createEditor } from "@/lib/editing"
 import { useActiveTheme } from "@/lib/useTheme"
 import { useEffectiveDark, useStore } from "@/store"
@@ -70,6 +71,8 @@ async function boot() {
     if (d) useStore.getState().openDiff(d.includes("=") ? "branch" : "uncommitted", d.split("=")[1] ?? null)
   }
   if (useStore.getState().tabs.length === 0) useStore.getState().newScratch()
+  // Release builds: quietly check for an update shortly after launch (main window only).
+  if (import.meta.env.PROD && windowLabel() === "main") window.setTimeout(() => void checkForUpdates(true), 8000)
 }
 
 function ActiveView() {

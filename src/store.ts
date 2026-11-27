@@ -192,6 +192,11 @@ export const useStore = create<State>((set, get) => ({
   dirty: {},
 
   setPrefs(p) {
+    // Choosing a theme also switches to its mode (unless the caller sets appearance itself).
+    if (p.appearance === undefined) {
+      if (p.darkTheme && !p.lightTheme) p = { ...p, appearance: "dark" }
+      else if (p.lightTheme && !p.darkTheme) p = { ...p, appearance: "light" }
+    }
     set(p)
     const s = get()
     const prefs: Prefs = {

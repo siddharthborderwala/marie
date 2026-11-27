@@ -48,6 +48,20 @@
       "icons/128x128@2x.png",
       "icons/icon.icns",
       "icons/icon.ico"
-    ]
+    ],
+    "createUpdaterArtifacts": true,
+    "category": "DeveloperTool",
+    "copyright": "\u00a9 2026 Siddharth Borderwala",
+    "macOS": {
+      "minimumSystemVersion": "13.0"
+    }
+  },
+  "plugins": {
+    "updater": {
+      "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IDVDRTkzMzYyNTlBOUJBOEMKUldTTXVxbFpZalBwWE1LUlB1WDliMjhONUNaNkNZaGNtS0QyeHVONnRheFdkdVhibGhvTGxpeEoK",
+      "endpoints": [
+        "https://github.com/siddharthborderwala/marie/releases/latest/download/latest.json"
+      ]
+    }
   }
 }

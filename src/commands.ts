@@ -1,6 +1,7 @@
 import { open, save } from "@tauri-apps/plugin-dialog"
 import { editorUndo, saveAll, saveTab } from "@/lib/editing"
 import { newWindow } from "@/lib/win"
+import { checkForUpdates } from "@/lib/updater"
 import { toast } from "sonner"
 import { activeTab, trimTrailingBlankLines, useStore } from "@/store"
 import { ipc } from "@/lib/ipc"
@@ -27,6 +28,7 @@ export async function openFolderDialog() {
 export const commands: Command[] = [
   { id: "file.newUntitled", group: "File", title: "New Untitled", shortcut: "⌘N", run: () => S().newScratch() },
   { id: "file.openFolder", group: "File", title: "Open Folder…", shortcut: "⌘O", run: openFolderDialog },
+  { id: "app.checkUpdates", group: "Marie", title: "Check for Updates…", run: () => void checkForUpdates(false) },
   { id: "file.newWindow", group: "File", title: "New Window", shortcut: "⇧⌘N", run: () => void newWindow() },
   {
     id: "file.openFolderNewWindow",

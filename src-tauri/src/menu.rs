@@ -19,6 +19,7 @@ pub fn build<R: Runtime>(app: &AppHandle<R>) -> tauri::Result<Menu<R>> {
         &[
             &PredefinedMenuItem::about(app, Some("About Marie"), Some(AboutMetadata::default()))?,
             &sep()?,
+            &item(app, "app.checkUpdates", "Check for Updates…", None)?,
             &item(app, "app.settings", "Settings…", Some("CmdOrCtrl+,"))?,
             &sep()?,
             &PredefinedMenuItem::services(app, None)?,

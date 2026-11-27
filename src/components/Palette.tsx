@@ -53,11 +53,11 @@ export function Palette() {
     setHighlight(mode === "theme-dark" ? s.darkTheme : mode === "theme-light" ? s.lightTheme : "")
   }, [open, mode])
 
-  const themeSnapshot = useRef<{ darkTheme: string; lightTheme: string } | null>(null)
+  const themeSnapshot = useRef<{ darkTheme: string; lightTheme: string; appearance: "system" | "light" | "dark" } | null>(null)
   useEffect(() => {
     if (open && (mode === "theme-dark" || mode === "theme-light")) {
       const s = useStore.getState()
-      themeSnapshot.current = { darkTheme: s.darkTheme, lightTheme: s.lightTheme }
+      themeSnapshot.current = { darkTheme: s.darkTheme, lightTheme: s.lightTheme, appearance: s.appearance }
     }
   }, [open, mode])
 
