@@ -1,0 +1,14 @@
+diff --git a/dist/render/FileTreeView.js b/dist/render/FileTreeView.js
+index b4c7ee49372580c729bce56f8b16f12f7ffbf14c..a2ba090d4066567208174dfc3c880996f9d2cbda 100644
+--- a/dist/render/FileTreeView.js
++++ b/dist/render/FileTreeView.js
+@@ -1285,7 +1285,8 @@ function FileTreeView({ composition, controller, gitStatusByPath, ignoredGitDire
+ 		const update = () => {
+ 			const nextItemCount = controller.getVisibleCount();
+ 			const nextViewportHeight = getCachedViewportHeight(measuredViewportHeightRef.current, initialViewportHeight);
+-			const maxScrollTop = Math.max(0, nextItemCount * itemHeight - nextViewportHeight);
++			// marie patch: allow scrolling into extra content after the rows (bottom spacer)
++			const maxScrollTop = Math.max(0, nextItemCount * itemHeight - nextViewportHeight, scrollElement.scrollHeight - scrollElement.clientHeight);
+ 			if (scrollElement.scrollTop > maxScrollTop) scrollElement.scrollTop = maxScrollTop;
+ 			setLayoutState(computeFileTreeViewLayoutState({
+ 				controller,

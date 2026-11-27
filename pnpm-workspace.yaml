@@ -3,3 +3,5 @@ packages: []
 allowBuilds:
   esbuild: true
   msw: false
+patchedDependencies:
+  '@pierre/trees@1.0.0': patches/@pierre__trees@1.0.0.patch

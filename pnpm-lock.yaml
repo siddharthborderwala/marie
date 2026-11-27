@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@pierre/trees@1.0.0':
+    hash: f5459759d681a70b851346944b1016047420771cd44cf072d1f62814733bbdcb
+    path: patches/@pierre__trees@1.0.0.patch
+
 importers:
 
   .:
@@ -25,7 +30,7 @@ importers:
         version: 0.5.1
       '@pierre/trees':
         specifier: ^1.0.0
-        version: 1.0.0(@pierre/theme@2.0.0)(@shikijs/themes@4.6.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(shiki@4.6.0)
+        version: 1.0.0(patch_hash=f5459759d681a70b851346944b1016047420771cd44cf072d1f62814733bbdcb)(@pierre/theme@2.0.0)(@shikijs/themes@4.6.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(shiki@4.6.0)
       '@pierre/words':
         specifier: ^0.1.2
         version: 0.1.2(@pierre/highlights@0.5.1)(react@19.3.1)
@@ -2992,7 +2997,7 @@ snapshots:
       react-dom: 19.3.1(react@19.3.1)
       shiki: 4.6.0
 
-  '@pierre/trees@1.0.0(@pierre/theme@2.0.0)(@shikijs/themes@4.6.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(shiki@4.6.0)':
+  '@pierre/trees@1.0.0(patch_hash=f5459759d681a70b851346944b1016047420771cd44cf072d1f62814733bbdcb)(@pierre/theme@2.0.0)(@shikijs/themes@4.6.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(shiki@4.6.0)':
     dependencies:
       '@pierre/theming': 1.0.2(@pierre/theme@2.0.0)(@shikijs/themes@4.6.0)(react-dom@19.3.1(react@19.3.1))(react@19.3.1)(shiki@4.6.0)
       preact: 11.0.0-beta.0

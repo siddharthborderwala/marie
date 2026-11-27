@@ -22,9 +22,12 @@ const TREE_CSS = `
   border-radius: 9999px;
   padding-inline: 10px;
 }
-/* Breathing room after the last item: 10% of the window height, at least 100px */
-[data-file-tree-virtualized-list="true"] {
-  padding-bottom: max(100px, 10vh);
+/* Breathing room after the last item: 10% of the window height, at least 100px.
+   A real spacer element (padding on the fixed-height list is ignored by WebKit). */
+[data-file-tree-virtualized-scroll]::after {
+  content: "";
+  display: block;
+  height: max(100px, 10vh);
 }
 /* Rounded hover/selection backgrounds with breathing room between rows */
 [data-item-button] {
