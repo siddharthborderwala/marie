@@ -260,12 +260,18 @@ export const useStore = create<State>((set, get) => ({
   },
 
   async openWorkspace(uri) {
-    const t = toast.loading(`Opening ${uri}…`)
+    // Only surface progress when opening is slow (e.g. first ssh connection).
+    let t: string | number | undefined
+    const slow = window.setTimeout(() => (t = toast.loading(`Opening ${uri}…`)), 500)
+    const done = () => {
+      window.clearTimeout(slow)
+      if (t !== undefined) toast.dismiss(t)
+    }
     try {
       const info = await ipc.openWorkspace(uri)
       // Already open in another window? Bring that window forward instead of duplicating.
       if (info.id !== get().workspace?.id && (await focusWindowFor(info.id))) {
-        toast.dismiss(t)
+        done()
         return
       }
       void setWindowFolder(info.id, `${info.name} — Marie`)
@@ -281,10 +287,11 @@ export const useStore = create<State>((set, get) => ({
       }))
       pushRecent(info.id)
       document.title = `${info.name} — Marie`
-      toast.dismiss(t)
+      done()
       await get().refresh()
     } catch (e) {
-      toast.error(String(e), { id: t })
+      done()
+      toast.error(String(e))
     }
   },
 

@@ -174,7 +174,6 @@ export async function saveTab(tabId: string) {
   const results = await Promise.all(list.map(saveOne))
   const ok = results.filter(Boolean).length
   if (ok) {
-    toast.success(ok === 1 ? `Saved ${list[0].path}` : `Saved ${ok} files`, { duration: 1200 })
     void useStore.getState().refreshStatus()
   }
 }

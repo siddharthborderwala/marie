@@ -361,7 +361,6 @@ async function copyPath(relative: boolean) {
   if (t?.kind !== "file" || !ws) return
   const text = relative ? t.path : ws.remote ? `${ws.id}/${t.path}` : `${ws.id}/${t.path}`
   await navigator.clipboard.writeText(text)
-  toast.success("Copied path", { description: text, duration: 1500 })
 }
 
 async function reloadThemes(announce = false) {
@@ -391,7 +390,6 @@ async function saveActive(as: boolean) {
         body = viewHandle(t.id)?.getText?.()
       }
       await ipc.writeAbs(target, body ?? "")
-      toast.success(`Saved ${target.split("/").pop()}`, { duration: 1200 })
       // If it landed inside the open (local) workspace, swap the scratch tab for the real file.
       if (ws && !ws.remote && target.startsWith(ws.id + "/")) {
         const rel = target.slice(ws.id.length + 1)
