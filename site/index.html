@@ -13,7 +13,7 @@
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Instrument+Serif:ital@0;1&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
     --ink: #141413;
@@ -27,7 +27,6 @@
     --btn-fg: var(--paper);
     --shadow: 0 1px 2px rgb(20 20 19 / .06), 0 24px 64px -16px rgb(20 20 19 / .28);
     --sans: "Inter", ui-sans-serif, system-ui, -apple-system, sans-serif;
-    --serif: "Instrument Serif", ui-serif, Georgia, serif;
     --mono: "JetBrains Mono", ui-monospace, "SF Mono", Menlo, monospace;
   }
   @media (prefers-color-scheme: dark) {
@@ -89,16 +88,16 @@
   }
   .eyebrow i { width: 6px; height: 6px; border-radius: 50%; background: #3FB950; }
   h1 {
-    font-family: var(--serif);
-    font-weight: 400;
-    font-size: clamp(48px, 8.4vw, 96px);
-    line-height: .98;
-    letter-spacing: -.02em;
+    font-weight: 600;
+    font-size: clamp(42px, 7vw, 80px);
+    line-height: 1.02;
+    letter-spacing: -.04em;
     margin: 0 auto;
     max-width: 12ch;
     text-wrap: balance;
   }
-  h1 em { font-style: italic; }
+  h1 em { font-style: normal; }
+  h2 em { font-style: normal; color: var(--muted); }
   .lede {
     max-width: 34rem; margin: 28px auto 0;
     font-size: 19px; line-height: 1.55; color: var(--muted);
@@ -142,8 +141,8 @@
     color: var(--muted); margin-bottom: 20px;
   }
   h2 {
-    font-family: var(--serif); font-weight: 400;
-    font-size: clamp(40px, 6vw, 64px); line-height: 1.02; letter-spacing: -.015em;
+    font-weight: 600;
+    font-size: clamp(32px, 4.6vw, 52px); line-height: 1.08; letter-spacing: -.035em;
     margin: 0 0 32px; text-wrap: balance;
   }
   .manifesto p { font-size: 20px; line-height: 1.6; margin: 0 0 20px; text-wrap: pretty; }
@@ -270,7 +269,7 @@
 <section class="manifesto" id="why">
   <div class="wrap">
     <div class="label">Why Marie</div>
-    <h2>Not an IDE. <em style="font-style:italic">On purpose.</em></h2>
+    <h2>Not an IDE. <em>On purpose.</em></h2>
     <p>Marie isn't competing with VS Code or Zed. Almost nobody writes code by hand anymore. Agents do.</p>
     <p class="dim">But you still have to look at what they made. You want to read the diff before you merge, read the plan before you approve it, and open one file on a server without setting up a whole workspace. An IDE is too much for that, and a browser tab is too little.</p>
     <p>Marie is for the human part: reading. It's a fast, quiet Mac app for code, diffs and Markdown, with just enough editing to fix what you spot.</p>
@@ -321,7 +320,7 @@
   <div class="wrap">
     <div class="head">
       <div class="label">Familiar by default</div>
-      <h2>If you know VS Code, <em style="font-style:italic">you know Marie.</em></h2>
+      <h2>If you know VS Code, <em>you know Marie.</em></h2>
       <p>Same shortcuts, same habits. Tabs, a file tree you can create, rename and delete in, find in files, go to line, multiple windows, right-click menus everywhere, and your folders reopen where you left them.</p>
     </div>
     <dl class="kb">
@@ -366,7 +365,7 @@
 <section class="manifesto name" id="name">
   <div class="wrap">
     <div class="label">The name</div>
-    <h2>Every Pierre needs <em style="font-style:italic">a Marie.</em></h2>
+    <h2>Every Pierre needs <em>a Marie.</em></h2>
     <p>Marie is built on <a href="https://diffs.com">Pierre</a>'s open-source libraries. <a href="https://diffs.com/docs">Diffs</a> renders the code and the diffs, <a href="https://trees.software">Trees</a> draws the file tree, and <a href="https://diffs.com/words">Words</a> renders the Markdown.</p>
     <p class="dim">So it's named after Marie Curie, who did her best work alongside Pierre.</p>
   </div>
@@ -375,7 +374,7 @@
 <section class="end">
   <div class="wrap">
     <svg class="mark" aria-hidden="true"><use href="#logo"/></svg>
-    <h2>Let the agents write.<br><em style="font-style:italic">You read.</em></h2>
+    <h2>Let the agents write.<br><em>You read.</em></h2>
     <div class="cta">
       <a class="btn" href="https://github.com/siddharthborderwala/marie/releases/latest/download/Marie.dmg">Download for Mac</a>
     </div>
