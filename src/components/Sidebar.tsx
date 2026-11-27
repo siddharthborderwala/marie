@@ -27,7 +27,7 @@ const TREE_CSS = `
 [data-file-tree-virtualized-scroll]::after {
   content: "";
   display: block;
-  height: max(100px, 10vh);
+  height: 48px;
 }
 /* Rounded hover/selection backgrounds with breathing room between rows */
 [data-item-button] {
